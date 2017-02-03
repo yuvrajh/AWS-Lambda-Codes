@@ -1,0 +1,34 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": [
+                "ec2:Describe*",
+                "ec2:RunInstances"
+            ],
+            "Resource": [
+                "*"
+            ],
+            "Effect": "Allow",
+            "Sid": "LaunchEC2Instances"
+        },
+        {
+            "Condition": {
+                "StringEquals": {
+                    "ec2:ResourceTag/PrincipalId": "${aws:userid}"
+                }
+            },
+            "Action": [
+                "ec2:StopInstances",
+                "ec2:StartInstances",
+                "ec2:RebootInstances",
+                "ec2:TerminateInstances"
+            ],
+            "Resource": [
+                "*"
+            ],
+            "Effect": "Allow",
+            "Sid": "AllowActionsIfYouAreTheOwner"
+        }
+    ]
+}
